@@ -11,7 +11,7 @@ class Scanner
             elsif valid_operators.include?(values[i]) && valid_digits.include?(values[i-1]) && valid_digits.include?(values[i+1])
                 nil
             else
-                return 1
+                raise "Unexpected value found!"
             end
             i += 1
         end

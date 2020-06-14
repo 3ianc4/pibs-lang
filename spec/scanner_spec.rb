@@ -22,8 +22,7 @@ RSpec.describe Scanner, "#tokenizer" do
   end
   it "reject operator only" do
     scanner = Scanner.new
-    token = scanner.tokenizer "+"
-    expect(token).to eq 1
+    expect{scanner.tokenizer("+")}.to raise_error("Unexpected value found!")
   end
 end
 
