@@ -1,21 +1,21 @@
 require './token'
 
 class Scanner
-    VALID_DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    VALID_OPERATORS = ["+", "-"]
-    
     def tokenizer(values)
         tokens = []
         values = values.gsub(" ", "")
         pointer = 0
-        while pointer < values.size
-            if values.match(/\d+/)
-                integer_tokens = values.scan(/\d+/)
+        while !values.empty?
+            if values.match(/^\d+/)
+                integer_tokens = values.scan(/^\d+/)
                 tokens << Token.new("integer", integer_tokens.first.to_i)
                 pointer += integer_tokens.first.size
-            elsif is_valid_operator_use?(values, pointer)
+                values = values.sub(/^\d+/, "")
+            elsif values.match(/^\+|^\-/)
+                operator_tokens = values.scan(/^\+|^\-/)
+                tokens << Token.new("operator", operator_tokens.first)
                 pointer += 1
-                nil
+                values = values.sub(/^\+|^\-/, "")
             else
                 raise "Unexpected value found!"
             end
