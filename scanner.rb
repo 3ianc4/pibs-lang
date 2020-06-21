@@ -21,8 +21,6 @@ class Scanner
     private
    
     def is_valid_operator_use?(values, i)
-        VALID_OPERATORS.include?(values[i]) && 
-        VALID_DIGITS.include?(values[i-1]) && 
-        VALID_DIGITS.include?(values[i+1])
+        VALID_OPERATORS.include?(values[i])
     end
 end
