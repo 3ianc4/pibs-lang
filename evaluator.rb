@@ -6,6 +6,10 @@ class Evaluator
             tokens = tokens.drop(1)
             result += tokens.first.value
             tokens = tokens.drop(1)
+          elsif tokens.first.sub?
+            tokens = tokens.drop(1)
+            result -= tokens.first.value
+            tokens = tokens.drop(1)
           else
             result += tokens.first.value
             tokens = tokens.drop(1)

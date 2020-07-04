@@ -8,4 +8,7 @@ class Token
     def sum?
         @value == "+"
     end
+    def sub?
+        @value == "-"
+    end
 end
