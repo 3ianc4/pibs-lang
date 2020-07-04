@@ -35,6 +35,6 @@ RSpec.describe Scanner, "#tokenizer" do
   end
   it "reject charactere" do
     scanner = Scanner.new
-    expect{scanner.tokenizer("a")}.to raise_error("Unexpected value found at the #{$pointer} value!")
+    expect{scanner.tokenizer("a")}.to raise_error("Unexpected value found at the 0 column!")
   end
 end
