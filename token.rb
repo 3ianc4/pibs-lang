@@ -4,4 +4,8 @@ class Token
         @type = type
         @value = value
     end
+
+    def sum?
+        @value == "+"
+    end
 end
