@@ -1,5 +1,5 @@
-require './scanner'
-require './evaluator'
+require "#{File.dirname(__FILE__)}/scanner"
+require "#{File.dirname(__FILE__)}/evaluator"
 
 class Interpreter
     def initialize(program)
@@ -16,5 +16,11 @@ class Interpreter
         result = @evaluator.evaluate(tokens)
         @current_line += 1
         return result
+    end
+
+    def execute_program
+        while @current_line < @lines.size
+            puts read_line
+        end
     end
 end

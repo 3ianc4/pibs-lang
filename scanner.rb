@@ -1,4 +1,4 @@
-require './token'
+require "#{File.dirname(__FILE__)}/token"
 
 VALID_INTEGERS = /^\d+/
 VALID_OPERATORS = /^\+|^\-/
