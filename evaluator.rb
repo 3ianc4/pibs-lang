@@ -1,6 +1,5 @@
 class Evaluator
     #TODO: move tokens to initializer
-    #DONE: rename evaluate_mult_precedence -> evaluate_1_level
     #TODO: add division operation
   
     def evaluate(tokens)
