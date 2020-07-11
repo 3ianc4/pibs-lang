@@ -115,4 +115,21 @@ RSpec.describe Evaluator, "#evaluate" do
         result = evaluator.evaluate(tokens)
         expect(result).to eq 2
     end
+
+    it "evaluates operation with four operators" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("integer", 4),
+            Token.new("operator", "+"),
+            Token.new("integer", 8),
+            Token.new("operator", "*"),
+            Token.new("integer", 2),
+            Token.new("operator", "-"),
+            Token.new("integer", 10),
+            Token.new("operator", "/"),
+            Token.new("integer", 2)
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 15
+    end
 end
