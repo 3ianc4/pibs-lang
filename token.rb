@@ -16,4 +16,8 @@ class Token
     def mult?
         @value == "*"
     end
+
+    def div?
+        @value == "/"
+    end
 end
