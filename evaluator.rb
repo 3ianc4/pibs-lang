@@ -2,15 +2,15 @@ class Evaluator
 
   def evaluate(tokens)
       @tokens =  tokens
-      result = evaluate_1_level
+      result = evaluate_1_level()
       while operation_sum_or_sub?
         token = @tokens.first
         if @tokens.first.sum?
-          @tokens = @tokens.drop(1)
-          result += evaluate_1_level
+          get_next_token()
+          result += evaluate_1_level()
         elsif @tokens.first.sub?
-          @tokens = @tokens.drop(1)
-          result -= evaluate_1_level
+          get_next_token()
+          result -= evaluate_1_level()
         end
       end
 
@@ -21,28 +21,32 @@ class Evaluator
 
   def evaluate_1_level
     result = @tokens.first.value
-    @tokens = @tokens.drop(1)
+    get_next_token()
 
     while operation_mult_or_div?
       if @tokens.first.mult?
-        @tokens = @tokens.drop(1)
+        get_next_token()
         result *= @tokens.first.value
-        @tokens = @tokens.drop(1)
+        get_next_token()
       elsif @tokens.first.div?
-        @tokens = @tokens.drop(1)
+        get_next_token()
         result /= @tokens.first.value
-        @tokens = @tokens.drop(1)
+        get_next_token()
       end
     end
 
     return result
   end
 
-  def operation_sum_or_sub?
+  def operation_sum_or_sub?()
     !@tokens.empty? && (@tokens.first.sum? || @tokens.first.sub?)
   end
   
-  def operation_mult_or_div?
+  def operation_mult_or_div?()
     !@tokens.empty? && (@tokens.first.mult? || @tokens.first.div?)
+  end
+
+  def get_next_token()
+    @tokens = @tokens.drop(1)
   end
 end
