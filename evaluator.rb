@@ -1,5 +1,6 @@
 class Evaluator
 
+  
   def evaluate(tokens)
       @tokens =  tokens
       result = evaluate_1_level
