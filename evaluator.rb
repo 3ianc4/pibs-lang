@@ -8,7 +8,7 @@ class Evaluator
   private
 
   def evaluate_first_level_precedence
-    result = current_token.value
+    result = current_token().value
     get_next_token()
 
     while operation_mult_or_div?
