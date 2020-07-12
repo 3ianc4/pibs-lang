@@ -2,47 +2,59 @@ class Evaluator
 
   def evaluate(tokens)
       @tokens =  tokens
-      result = evaluate_1_level
-      while operation_sum_or_sub?
-        token = @tokens.first
-        if @tokens.first.sum?
-          @tokens = @tokens.drop(1)
-          result += evaluate_1_level
-        elsif @tokens.first.sub?
-          @tokens = @tokens.drop(1)
-          result -= evaluate_1_level
-        end
-      end
-
-      return result
+      return evaluate_second_level_precedence()
   end
 
   private
 
-  def evaluate_1_level
-    result = @tokens.first.value
-    @tokens = @tokens.drop(1)
+  def evaluate_first_level_precedence
+    result = current_token().value
+    get_next_token()
 
     while operation_mult_or_div?
-      if @tokens.first.mult?
-        @tokens = @tokens.drop(1)
-        result *= @tokens.first.value
-        @tokens = @tokens.drop(1)
-      elsif @tokens.first.div?
-        @tokens = @tokens.drop(1)
-        result /= @tokens.first.value
-        @tokens = @tokens.drop(1)
+      if current_token.mult?
+        get_next_token()
+        result *= current_token.value
+        get_next_token()
+      elsif current_token.div?
+        get_next_token()
+        result /= current_token.value
+        get_next_token()
       end
     end
 
     return result
   end
 
-  def operation_sum_or_sub?
-    !@tokens.empty? && (@tokens.first.sum? || @tokens.first.sub?)
+  def evaluate_second_level_precedence
+    result = evaluate_first_level_precedence()
+
+    while operation_sum_or_sub?
+      if current_token.sum?
+        get_next_token()
+        result += evaluate_first_level_precedence()
+      elsif current_token.sub?
+        get_next_token()
+        result -= evaluate_first_level_precedence()
+      end
+    end
+
+    return result
+  end
+
+  def operation_sum_or_sub?()
+    !@tokens.empty? && (current_token.sum? || current_token.sub?)
   end
   
-  def operation_mult_or_div?
-    !@tokens.empty? && (@tokens.first.mult? || @tokens.first.div?)
+  def operation_mult_or_div?()
+    !@tokens.empty? && (current_token.mult? || current_token.div?)
+  end
+
+  def get_next_token()
+    @tokens = @tokens.drop(1)
+  end
+
+  def current_token
+    @tokens.first
   end
 end
