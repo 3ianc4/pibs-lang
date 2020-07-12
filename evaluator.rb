@@ -3,7 +3,7 @@ class Evaluator
   def evaluate(tokens)
       @tokens =  tokens
       result = evaluate_1_level
-      while !@tokens.empty? && (@tokens.first.sum? || @tokens.first.sub?)
+      while operation_sum_or_sub?
         token = @tokens.first
         if @tokens.first.sum?
           @tokens = @tokens.drop(1)
@@ -23,7 +23,7 @@ class Evaluator
     result = @tokens.first.value
     @tokens = @tokens.drop(1)
 
-    while !@tokens.empty? && (@tokens.first.mult? || @tokens.first.div?)
+    while operation_mult_or_div?
       if @tokens.first.mult?
         @tokens = @tokens.drop(1)
         result *= @tokens.first.value
@@ -36,5 +36,13 @@ class Evaluator
     end
 
     return result
+  end
+
+  def operation_sum_or_sub?
+    !@tokens.empty? && (@tokens.first.sum? || @tokens.first.sub?)
+  end
+  
+  def operation_mult_or_div?
+    !@tokens.empty? && (@tokens.first.mult? || @tokens.first.div?)
   end
 end
