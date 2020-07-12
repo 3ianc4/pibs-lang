@@ -2,24 +2,12 @@ class Evaluator
 
   def evaluate(tokens)
       @tokens =  tokens
-      result = evaluate_1_level()
-
-      while operation_sum_or_sub?
-        if current_token.sum?
-          get_next_token()
-          result += evaluate_1_level()
-        elsif current_token.sub?
-          get_next_token()
-          result -= evaluate_1_level()
-        end
-      end
-
-      return result
+      return evaluate_second_level_precedence()
   end
 
   private
 
-  def evaluate_1_level
+  def evaluate_first_level_precedence
     result = current_token.value
     get_next_token()
 
@@ -32,6 +20,22 @@ class Evaluator
         get_next_token()
         result /= current_token.value
         get_next_token()
+      end
+    end
+
+    return result
+  end
+
+  def evaluate_second_level_precedence
+    result = evaluate_first_level_precedence()
+
+    while operation_sum_or_sub?
+      if current_token.sum?
+        get_next_token()
+        result += evaluate_first_level_precedence()
+      elsif current_token.sub?
+        get_next_token()
+        result -= evaluate_first_level_precedence()
       end
     end
 
