@@ -2,4 +2,4 @@
 
 ##### About
 ___________________________________________________________________________________________________________________________________________________________________
-Bibs is an interpreter built with Ruby in development process.
+Bibs is an interpreter built with Ruby currently in development process.
