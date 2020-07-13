@@ -1,1 +1,5 @@
-# bibs-lang
+**Bibs Programming Language**
+
+##### About
+___________________________________________________________________________________________________________________________________________________________________
+Bibs is an interpreter built with Ruby in development process.
