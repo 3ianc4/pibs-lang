@@ -8,8 +8,7 @@ class Evaluator
   private
 
   def evaluate_first_level_precedence
-    result = current_token().value
-    get_next_token()
+    result = is_parenthesis()
 
     while operation_mult_or_div?
       if current_token.mult?
@@ -56,5 +55,18 @@ class Evaluator
 
   def current_token
     @tokens.first
+  end
+
+  def is_parenthesis()
+    token = current_token
+    if token.left_paren?()
+      get_next_token()
+      result = evaluate_second_level_precedence()
+      get_next_token()
+    else
+      get_next_token
+      result = token.value
+    end
+    return result
   end
 end

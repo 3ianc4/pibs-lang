@@ -29,7 +29,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 3
     end
 
-    xit "evaluates operation with operators in first position" do
+    it "evaluates operation with operators in first position" do
         evaluator = Evaluator.new
         tokens = [Token.new("operator", "+"), Token.new("integer", 1)]
         result = evaluator.evaluate(tokens)
@@ -56,7 +56,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq -1
     end
 
-    xit "evaluates operation with subtraction in first position" do
+    it "evaluates operation with subtraction in first position" do
         evaluator = Evaluator.new
         tokens = [Token.new("operator", "-"), Token.new("operator", 1)]
         result = evaluator.evaluate(tokens)
@@ -132,4 +132,123 @@ RSpec.describe Evaluator, "#evaluate" do
         result = evaluator.evaluate(tokens)
         expect(result).to eq 15
     end
+
+    it "evaluates single expression with parenthesis" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("leftparen", "("),
+            Token.new("integer", 10),
+            Token.new("rightparen", ")")
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 10
+    end
+    it "evaluates sum expression inside parenthesis" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("leftparen", "("),
+            Token.new("integer", 10),
+            Token.new("operator", "+"),
+            Token.new("integer", 10),
+            Token.new("rightparen", ")")
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 20
+    end
+
+    it "evaluates sum expression with parenthesis only in the first integer" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("leftparen", "("),
+            Token.new("integer", 10),
+            Token.new("rightparen", ")"),
+            Token.new("operator", "+"),
+            Token.new("integer", 10)
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 20
+    end
+
+
+    it "evaluates multiplication expression with parenthesis" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("leftparen", "("),
+            Token.new("integer", 10),
+            Token.new("operator", "*"),
+            Token.new("integer", 5),
+            Token.new("rightparen", ")"),
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 50
+    end
+
+    it "evaluates sum inside and outside parenthesis" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("leftparen", "("),
+            Token.new("integer", 10),
+            Token.new("operator", "+"),
+            Token.new("integer", 10),
+            Token.new("rightparen", ")"),
+            Token.new("operator", "+"),
+            Token.new("integer", 10)
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 30
+    end
+
+    it "evaluates operation with parenthesis and mixed operators" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("leftparen", "("),
+            Token.new("integer", 10),
+            Token.new("operator", "+"),
+            Token.new("integer", 10),
+            Token.new("rightparen", ")"),
+            Token.new("operator", "*"),
+            Token.new("integer", 5)
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 100
+    end
+
+    it "evaluates complex operation with parenthesis and mixed operators" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("leftparen", "("),
+            Token.new("integer", 10),
+            Token.new("operator", "*"),
+            Token.new("integer", 4),
+            Token.new("rightparen", ")"),
+            Token.new("operator", "-"),
+            Token.new("integer", 10),
+            Token.new("operator", "/"),
+            Token.new("integer", 2)
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 35
+    end
+
+    it "evaluates really complex operation with parenthesis and mixed operators" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("leftparen", "("),
+            Token.new("integer", 10),
+            Token.new("operator", "+"),
+            Token.new("leftparen", "("),
+            Token.new("integer", 3),
+            Token.new("operator", "*"),
+            Token.new("integer", 5),
+            Token.new("rightparen", ")"),
+            Token.new("operator", "-"),
+            Token.new("integer", 5),
+            Token.new("rightparen", ")"),
+            Token.new("operator", "/"),
+            Token.new("integer", 2)
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 10
+    end
+    
 end
