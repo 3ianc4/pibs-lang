@@ -29,7 +29,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 3
     end
 
-    it "evaluates operation with operators in first position" do
+    xit "evaluates plus operator in first position" do
         evaluator = Evaluator.new
         tokens = [Token.new("operator", "+"), Token.new("integer", 1)]
         result = evaluator.evaluate(tokens)
@@ -56,7 +56,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq -1
     end
 
-    it "evaluates operation with subtraction in first position" do
+    xit "evaluates minus operator in first position" do
         evaluator = Evaluator.new
         tokens = [Token.new("operator", "-"), Token.new("operator", 1)]
         result = evaluator.evaluate(tokens)
@@ -83,7 +83,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 6
     end
 
-    it "evaluates complex multiplication operation" do
+    it "evaluates complex multiplication" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("integer", 2),
@@ -103,7 +103,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 2
     end
 
-    it "evaluates complex division operation" do
+    it "evaluates complex division" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("integer", 20),
@@ -143,7 +143,7 @@ RSpec.describe Evaluator, "#evaluate" do
         result = evaluator.evaluate(tokens)
         expect(result).to eq 10
     end
-    it "evaluates sum expression inside parenthesis" do
+    it "evaluates sum operation with parenthesis" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("leftparen", "("),
@@ -156,7 +156,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 20
     end
 
-    it "evaluates sum expression with parenthesis only in the first integer" do
+    it "evaluates sum operation with parenthesins before operator" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("leftparen", "("),
@@ -230,7 +230,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 35
     end
 
-    it "evaluates really complex operation with parenthesis and mixed operators" do
+    it "evaluates omplex operation with more than one parenthesis" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("leftparen", "("),
