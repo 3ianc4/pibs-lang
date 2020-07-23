@@ -29,7 +29,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 3
     end
 
-    xit "evaluates plus operator in first position" do
+    it "evaluates plus operator in first position" do
         evaluator = Evaluator.new
         tokens = [Token.new("operator", "+"), Token.new("integer", 1)]
         result = evaluator.evaluate(tokens)
@@ -56,7 +56,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq -1
     end
 
-    xit "evaluates minus operator in first position" do
+    it "evaluates minus operator in first position" do
         evaluator = Evaluator.new
         tokens = [Token.new("operator", "-"), Token.new("operator", 1)]
         result = evaluator.evaluate(tokens)
@@ -74,6 +74,12 @@ RSpec.describe Evaluator, "#evaluate" do
         ]
         result = evaluator.evaluate(tokens)
         expect(result).to eq 1
+    end
+
+    it "evaluates times operator in first position" do
+        evaluator = Evaluator.new
+        tokens = [Token.new("operator", "*"), Token.new("integer", 1)]
+        expect{evaluator.evaluate(tokens)}.to raise_error("Expression started with invalid operator") 
     end
 
     it "evaluates simple multiplication" do
@@ -94,6 +100,12 @@ RSpec.describe Evaluator, "#evaluate" do
         ]
         result = evaluator.evaluate(tokens)
         expect(result).to eq 4
+    end
+
+    it "evaluates division operator in first position" do
+        evaluator = Evaluator.new
+        tokens = [Token.new("operator", "/"), Token.new("integer", 1)]
+        expect{evaluator.evaluate(tokens)}.to raise_error("Expression started with invalid operator") 
     end
 
     it "evaluate simple division" do
