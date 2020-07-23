@@ -1,5 +1,6 @@
-**Bibs Programming Language**
+**Pibs Programming Language**
 
 ##### About
 ___________________________________________________________________________________________________________________________________________________________________
-Bibs is an interpreter built with Ruby currently in development process.
+
+Pibs is an interpreter built with Ruby currently in development process.
