@@ -242,7 +242,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 35
     end
 
-    it "evaluates omplex operation with more than one parenthesis" do
+    it "evaluates complex operation with more than one parenthesis" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("leftparen", "("),

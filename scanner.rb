@@ -3,6 +3,7 @@ require "#{File.dirname(__FILE__)}/token"
 VALID_INTEGERS = /^\d+/
 VALID_OPERATORS = /^\+|^\-/
 VALID_IDENTIFIERS = /\w+/
+ASSIGNMENT = /=/
 
 class Scanner
 
@@ -33,8 +34,12 @@ class Scanner
                 tokens << Token.new("id", identifier_tokens.first)
                 @pointer += 1
                 values = values.sub(VALID_IDENTIFIERS, "")
-
-                puts "TOKENS = #{tokens}"
+            elsif is_assignment?(values)
+                puts "TOKENS = #{values}"
+                assignment_token = values.scan(ASSIGNMENT)
+                tokens << Token.new("assignment", assignment_token.first)
+                @pointer += 1
+                values = values.sub(ASSIGNMENT, "")
             else
                 raise "Unexpected value found at the #{@pointer} column!"
             end
@@ -57,7 +62,11 @@ class Scanner
     end
 
     def is_identifier?(values)
-        values.match(VALID_IDENTIFIERS)
+        values[0].match(VALID_IDENTIFIERS)
+    end
+
+    def is_assignment?(values)
+        values.match(ASSIGNMENT)
     end
 
     def is_type?(values)

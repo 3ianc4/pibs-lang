@@ -49,4 +49,16 @@ RSpec.describe Scanner, "#tokenizer" do
     expect(tokens[1].type).to eq("id")
     expect(tokens[1].value).to eq("a")
   end
+
+  it "generate assignment operation token" do
+    scanner = Scanner.new
+    tokens = scanner.tokenizer "int a = 1"
+    expect(tokens.size).to eq(4)
+    expect(tokens[2]).to be_a(Token)
+    expect(tokens[2].type).to eq("assignment")
+    expect(tokens[2].value).to eq("=")
+    expect(tokens[3]).to be_a(Token)
+    expect(tokens[3].type).to eq("integer")
+    expect(tokens[3].value).to eq(1)
+  end
 end
