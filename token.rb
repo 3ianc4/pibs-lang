@@ -20,4 +20,12 @@ class Token
     def div?
         @value == "/"
     end
+
+    def left_paren?
+        @value == "("
+    end
+
+    def right_paren?
+        @value == ")"
+    end
 end

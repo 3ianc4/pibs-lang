@@ -8,8 +8,7 @@ class Evaluator
   private
 
   def evaluate_first_level_precedence
-    result = current_token().value
-    get_next_token()
+    result = evaluate_parenthesis()
 
     while operation_mult_or_div?
       if current_token.mult?
@@ -22,7 +21,6 @@ class Evaluator
         get_next_token()
       end
     end
-
     return result
   end
 
@@ -56,5 +54,21 @@ class Evaluator
 
   def current_token
     @tokens.first
+  end
+
+  def evaluate_parenthesis()
+    if current_token.left_paren?()
+      get_next_token()
+      result = evaluate_second_level_precedence()
+      get_next_token()
+    elsif (current_token.sum? || current_token.sub?)
+      return 0
+    elsif (current_token.mult? || current_token.div?)
+      raise "Expression started with invalid operator"
+    else
+      result = current_token.value
+      get_next_token
+    end
+    return result
   end
 end
