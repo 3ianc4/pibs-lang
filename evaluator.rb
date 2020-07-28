@@ -61,10 +61,7 @@ class Evaluator
       get_next_token()
       result = evaluate_second_level_precedence()
       get_next_token()
-    elsif current_token.sum?
-      get_next_token()
-      return current_token.value
-    elsif current_token.sub?
+    elsif (current_token.sum? || current_token.sub?)
       return 0
     elsif (current_token.mult? || current_token.div?)
       raise "Expression started with invalid operator"
