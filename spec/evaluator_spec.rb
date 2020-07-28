@@ -36,13 +36,6 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 1
     end
 
-    it "evaluates simple subtraction operation" do
-        evaluator = Evaluator.new
-        tokens = [Token.new("integer", 1), Token.new("operator", "-"), Token.new("integer", 1)]
-        result = evaluator.evaluate(tokens)
-        expect(result).to eq 0
-    end
-
     it "evaluates complex subtraction operation" do
         evaluator = Evaluator.new
         tokens = [
@@ -195,7 +188,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 50
     end
 
-    it "evaluates sum inside and outside parenthesis" do
+    it "evaluates sum operation inside and outside parenthesis" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("leftparen", "("),
@@ -242,7 +235,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 35
     end
 
-    it "evaluates omplex operation with more than one parenthesis" do
+    it "evaluates complex operation with more than one parenthesis" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("leftparen", "("),
