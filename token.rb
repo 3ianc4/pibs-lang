@@ -28,4 +28,12 @@ class Token
     def right_paren?
         @value == ")"
     end
+
+    def variable_name?
+        @value == /^[a-z]+/
+    end
+
+    def integer_type?
+        @type == "int"
+    end
 end

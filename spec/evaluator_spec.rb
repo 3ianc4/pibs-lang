@@ -36,13 +36,6 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 1
     end
 
-    it "evaluates simple subtraction operation" do
-        evaluator = Evaluator.new
-        tokens = [Token.new("integer", 1), Token.new("operator", "-"), Token.new("integer", 1)]
-        result = evaluator.evaluate(tokens)
-        expect(result).to eq 0
-    end
-
     it "evaluates complex subtraction operation" do
         evaluator = Evaluator.new
         tokens = [
@@ -102,7 +95,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 4
     end
 
-    it "evaluates division operator in first position" do
+    it "rejects division operator in first position" do
         evaluator = Evaluator.new
         tokens = [Token.new("operator", "/"), Token.new("integer", 1)]
         expect{evaluator.evaluate(tokens)}.to raise_error("Expression started with invalid operator") 
@@ -195,7 +188,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 50
     end
 
-    it "evaluates sum inside and outside parenthesis" do
+    it "evaluates sum operation inside and outside parenthesis" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("leftparen", "("),
@@ -210,7 +203,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 30
     end
 
-    it "evaluates operation with parenthesis and mixed operators" do
+    it "evaluates operation with operators inside and outside parenthesis" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("leftparen", "("),
@@ -225,7 +218,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 100
     end
 
-    it "evaluates complex operation with parenthesis and mixed operators" do
+    it "evaluates operation with mixed operators and parenthesis" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("leftparen", "("),
@@ -262,5 +255,41 @@ RSpec.describe Evaluator, "#evaluate" do
         result = evaluator.evaluate(tokens)
         expect(result).to eq 10
     end
-    
+
+    it "Evaluates simples assignment operation" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("int", "int"),
+            Token.new("id", "a"),
+            Token.new("assignment", "="),
+            Token.new("integer", 1)
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 1
+    end
+
+    it "Evaluates sum operation with a variable" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("int", "int"),
+            Token.new("id", "a"),
+            Token.new("assignment", "="),
+            Token.new("integer", 1),
+            Token.new("operator", "+"),
+            Token.new("integer", 1)
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 2
+    end
+
+    it "rejects incompatible types" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("int", "int"),
+            Token.new("id", "a"),
+            Token.new("assignment", "="),
+            Token.new("id", "b"),
+        ]
+        expect{evaluator.evaluate(tokens)}.to raise_error("error: incompatible types") 
+    end
 end
