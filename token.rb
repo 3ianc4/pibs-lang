@@ -36,4 +36,8 @@ class Token
     def integer_type?
         @type == "int"
     end
+
+    def is_assignment?
+        @value == "="
+    end
 end

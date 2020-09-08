@@ -15,18 +15,18 @@ class Evaluator
     
     if current_token.integer_type?
       get_next_token()
-      var = ""
-      until current_token.value == "="
-          var << current_token.value
+      new_variable = String.new
+      until current_token.is_assignment?
+          new_variable << current_token.value
           get_next_token()
       end
       get_next_token()
-      @assignment[var] = evaluate_second_level_precedence()
+      @assignment[new_variable] = evaluate_second_level_precedence()
 
-      if @assignment[var].class != Integer
-        raise "error: incompatible types"
+      if @assignment[new_variable].class != Integer
+        raise "TypeError: declared type doesn't match to variable value"
       end
-      return @assignment[var]
+      return @assignment[new_variable]
     else
       evaluate_second_level_precedence()
     end

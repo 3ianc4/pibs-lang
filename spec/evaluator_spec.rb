@@ -256,7 +256,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 10
     end
 
-    it "Evaluates simples assignment operation" do
+    it "Evaluates integer assignment operation" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("int", "int"),
@@ -265,10 +265,10 @@ RSpec.describe Evaluator, "#evaluate" do
             Token.new("integer", 1)
         ]
         result = evaluator.evaluate(tokens)
-        expect(result).to eq 1
+        expect(result).to eq 1 # deveria esperar a = 1?
     end
 
-    it "Evaluates sum operation with a variable" do
+    it "Evaluates assignment of sum operation" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("int", "int"),
@@ -288,8 +288,8 @@ RSpec.describe Evaluator, "#evaluate" do
             Token.new("int", "int"),
             Token.new("id", "a"),
             Token.new("assignment", "="),
-            Token.new("id", "b"),
+            Token.new("string", "b"),
         ]
-        expect{evaluator.evaluate(tokens)}.to raise_error("error: incompatible types") 
+        expect{evaluator.evaluate(tokens)}.to raise_error("TypeError: declared type doesn't match to variable value") 
     end
 end
