@@ -29,13 +29,11 @@ class Scanner
                 result = is_type?(values)
                 tokens << result
                 values = values.slice!(result.value.size..values.size)
-                puts "values = #{values}"
                 identifier_tokens = values.scan(VALID_IDENTIFIERS)
                 tokens << Token.new("id", identifier_tokens.first)
                 @pointer += 1
                 values = values.sub(VALID_IDENTIFIERS, "")
             elsif is_assignment?(values)
-                puts "TOKENS = #{values}"
                 assignment_token = values.scan(ASSIGNMENT)
                 tokens << Token.new("assignment", assignment_token.first)
                 @pointer += 1

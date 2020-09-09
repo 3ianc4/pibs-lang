@@ -101,7 +101,6 @@ class Evaluator
     elsif (current_token.mult? || current_token.div?)
       raise "Expression started with invalid operator"
     elsif @assignment.has_key?(current_token.value)
-      puts "Entrou aqui"
       return @assignment[current_token.value]
       get_next_token()
     else

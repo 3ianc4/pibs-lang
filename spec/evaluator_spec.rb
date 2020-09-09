@@ -265,7 +265,7 @@ RSpec.describe Evaluator, "#evaluate" do
             Token.new("integer", 1)
         ]
         result = evaluator.evaluate(tokens)
-        expect(result).to eq 1 # deveria esperar a = 1?
+        expect(result).to eq 1
     end
 
     it "Evaluates assignment of sum operation" do
