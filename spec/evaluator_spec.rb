@@ -95,7 +95,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 4
     end
 
-    it "evaluates division operator in first position" do
+    it "rejects division operator in first position" do
         evaluator = Evaluator.new
         tokens = [Token.new("operator", "/"), Token.new("integer", 1)]
         expect{evaluator.evaluate(tokens)}.to raise_error("Expression started with invalid operator") 
@@ -235,7 +235,7 @@ RSpec.describe Evaluator, "#evaluate" do
         expect(result).to eq 35
     end
 
-    it "evaluates operation with mixed operators and multiple parenthesis" do
+    it "evaluates complex operation with more than one parenthesis" do
         evaluator = Evaluator.new
         tokens = [
             Token.new("leftparen", "("),
@@ -255,5 +255,41 @@ RSpec.describe Evaluator, "#evaluate" do
         result = evaluator.evaluate(tokens)
         expect(result).to eq 10
     end
-    
+
+    it "Evaluates integer assignment operation" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("int", "int"),
+            Token.new("id", "a"),
+            Token.new("assignment", "="),
+            Token.new("integer", 1)
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 1
+    end
+
+    it "Evaluates assignment of sum operation" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("int", "int"),
+            Token.new("id", "a"),
+            Token.new("assignment", "="),
+            Token.new("integer", 1),
+            Token.new("operator", "+"),
+            Token.new("integer", 1)
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 2
+    end
+
+    it "rejects incompatible types" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("int", "int"),
+            Token.new("id", "a"),
+            Token.new("assignment", "="),
+            Token.new("string", "b"),
+        ]
+        expect{evaluator.evaluate(tokens)}.to raise_error("TypeError: declared type doesn't match to variable value") 
+    end
 end

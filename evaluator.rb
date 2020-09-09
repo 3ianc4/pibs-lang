@@ -1,11 +1,46 @@
+=begin
+  To do: 
+    1. O hash só carrega a variavel e o valor, mas não o tipo. Usar outra estrutura pra carregar tudo?
+  Próximos passos
+    1. Reutilização de variáveis
+    2. Reassignment?
+    3. Outros tipos - String, bool
+=end
+
+
 class Evaluator
+
+  def initialize
+    @assignment = {}
+  end
 
   def evaluate(tokens)
       @tokens =  tokens
-      return evaluate_second_level_precedence()
+      return evaluate_integer_assignment()
   end
 
   private
+
+  def evaluate_integer_assignment()
+    
+    if current_token.integer_type?
+      get_next_token()
+      new_variable = String.new
+      until current_token.is_assignment?
+          new_variable << current_token.value
+          get_next_token()
+      end
+      get_next_token() 
+      @assignment[new_variable] = evaluate_second_level_precedence()
+
+      if @assignment[new_variable].class != Integer
+        raise "TypeError: declared type doesn't match to variable value"
+      end
+      return @assignment[new_variable]
+    else
+      evaluate_second_level_precedence()
+    end
+  end
 
   def evaluate_first_level_precedence
     result = evaluate_parenthesis()
@@ -65,9 +100,12 @@ class Evaluator
       return 0
     elsif (current_token.mult? || current_token.div?)
       raise "Expression started with invalid operator"
+    elsif @assignment.has_key?(current_token.value)
+      return @assignment[current_token.value]
+      get_next_token()
     else
       result = current_token.value
-      get_next_token
+      get_next_token()
     end
     return result
   end
