@@ -1,3 +1,13 @@
+=begin
+  To do: 
+    1. O hash só carrega a variavel e o valor, mas não o tipo. Usar outra estrutura pra carregar tudo?
+  Próximos passos
+    1. Reutilização de variáveis
+    2. Reassignment?
+    3. Outros tipos - String, bool
+=end
+
+
 class Evaluator
 
   def initialize
@@ -6,12 +16,12 @@ class Evaluator
 
   def evaluate(tokens)
       @tokens =  tokens
-      return evaluate_assignment()
+      return evaluate_integer_assignment()
   end
 
   private
 
-  def evaluate_assignment()
+  def evaluate_integer_assignment()
     
     if current_token.integer_type?
       get_next_token()
@@ -20,7 +30,7 @@ class Evaluator
           new_variable << current_token.value
           get_next_token()
       end
-      get_next_token()
+      get_next_token() 
       @assignment[new_variable] = evaluate_second_level_precedence()
 
       if @assignment[new_variable].class != Integer
