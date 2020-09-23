@@ -1,11 +1,38 @@
+require "#{File.dirname(__FILE__)}/ast"
+
 class Evaluator
 
   def evaluate(tokens)
-      @tokens =  tokens
-      return evaluate_second_level_precedence()
+      @tokens = tokens
+      @assignment_statements = {}
+      return evaluate_assignment_statement()
   end
 
   private
+
+  def evaluate_assignment_statement()
+    if current_token().integer_type?()
+      get_next_token()
+      var_name = String.new
+      until current_token().is_assignment?()
+          var_name << current_token().value
+          get_next_token()
+      end
+      get_next_token() 
+      var_value = evaluate_second_level_precedence()
+
+      if var_value.class != Integer
+        raise "TypeError: declared type doesn't match to variable value"
+        return
+      end
+
+      @assignment_statements[var_name] = AST.new("int", var_name, var_value)
+
+      return @assignment_statements[var_name].value
+    else
+      evaluate_second_level_precedence()
+    end
+  end
 
   def evaluate_first_level_precedence
     result = evaluate_parenthesis()
@@ -52,7 +79,7 @@ class Evaluator
     @tokens = @tokens.drop(1)
   end
 
-  def current_token
+  def current_token()
     @tokens.first
   end
 
