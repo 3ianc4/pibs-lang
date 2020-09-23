@@ -28,4 +28,12 @@ class Token
     def right_paren?
         @value == ")"
     end
+
+    def integer_type?
+        @value == "int"
+    end
+
+    def is_assignment?
+        @value == "="
+    end
 end

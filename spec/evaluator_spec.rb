@@ -262,5 +262,17 @@ RSpec.describe Evaluator, "#evaluate" do
         result = evaluator.evaluate(tokens)
         expect(result).to eq 10
     end
+
+    it "evaluates simple assignment statement" do
+        evaluator = Evaluator.new
+        tokens = [
+            Token.new("type", "int"),
+            Token.new("identifier", "a"),
+            Token.new("assign", "="),
+            Token.new("integer", 1)
+        ]
+        result = evaluator.evaluate(tokens)
+        expect(result).to eq 1
+    end
     
 end
